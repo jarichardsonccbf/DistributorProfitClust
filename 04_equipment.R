@@ -1,5 +1,3 @@
-library(tidyverse)
-
 source("03_spring_pull.R")
 
 # equipment in outlet from Jignesh

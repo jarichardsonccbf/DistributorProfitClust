@@ -22,14 +22,27 @@ colnames(rev.opex) <- c("Distributor Name",
                  "Total Revenue", 
                  "Total DNGP", 
                  "Distributor Revenue", 
-                 "Outlet Revenue Percentage", 
+                 "Distributor RTM Revenue",
+                 "Distributor LMP Revenue",
+                 "Outlet RTM Revenue Percentage", 
                  "Distributor OPEX", 
                  "Outlet OPEX Burden", 
+                 "SubChannel",
+                 "Channel",
+                 "KeyAccount",
+                 "TradeName",
                  "Total Hours", 
                  "SAM OPEX", 
                  "Equipment Service OPEX", 
                  "Equipment Depreciation OPEX", 
+                 "Equipment Count",
                  "Equipment Total OPEX",
                  "Outlet Total OPEX", 
                  "OI",
                  "OI Ratio")
+
+rev.opex %>% 
+  group_by(`Distributor Name`) %>% 
+  summarise(mean.oi.ratio = mean(as.numeric(`OI Ratio`)))
+
+write.csv(rev.opex, "deliverables/artm_profit.csv", row.names = FALSE)

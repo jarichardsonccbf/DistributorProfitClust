@@ -1,18 +1,18 @@
-# library(RJDBC)
-# library(keyring)
+library(RJDBC)
+library(keyring)
 library(lubridate)
 
 source("02_cts.R")
 
-# # import and establish hana connection ----
-# 
-# options(java.parameters = "-Xmx8048m")
-# # memory.limit(size=10000000000024)
-# 
-# # classPath="C:/Program Files/sap/hdbclient/ngdbc.jar"
-# # For ngdbc.jar use        # jdbcDriver <- JDBC(driverClass="com.sap.db.jdbc.Driver",
-# # For HANA Studio jar use  # jdbcDriver <- JDBC(driverClass="com.sap.ndb.studio.jdbc.JDBCConnection",
-# 
+# import and establish hana connection ----
+
+options(java.parameters = "-Xmx8048m")
+# memory.limit(size=10000000000024)
+
+# classPath="C:/Program Files/sap/hdbclient/ngdbc.jar"
+# For ngdbc.jar use        # jdbcDriver <- JDBC(driverClass="com.sap.db.jdbc.Driver",
+# For HANA Studio jar use  # jdbcDriver <- JDBC(driverClass="com.sap.ndb.studio.jdbc.JDBCConnection",
+
 # jdbcDriver <- JDBC(driverClass="com.sap.db.jdbc.Driver",
 #                    classPath="C:/Program Files/sap/hdbclient/ngdbc.jar")
 # 
@@ -52,9 +52,9 @@ source("02_cts.R")
 #                             param3,
 #                             param4,
 #                             param5)
-# 
-# rm(jdbcConnection, jdbcDriver, param1, param2, param3, param4, param5, sql)
-# 
+
+rm(jdbcConnection, jdbcDriver, param1, param2, param3, param4, param5, sql, jdbcDriver)
+
 # saveRDS(spring.visit, "data/spring.RDS")
 
 spring.visit <- readRDS("data/spring.RDS") %>% 

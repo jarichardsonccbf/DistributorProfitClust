@@ -8,6 +8,10 @@ equip.list <- read.csv("data/equip_list.csv") %>%
   rename(Customer.host.code = Customer) %>% 
   mutate(Customer.host.code = as.character(Customer.host.code)) %>% 
   semi_join(rev.opex, "Customer.host.code")
+
+equip.count <- equip.list %>% 
+  group_by(Customer.host.code) %>% 
+  summarise(equip.count = n())
   
 
 equip.serv <- read.csv("data/equip_serv.csv")
@@ -48,10 +52,12 @@ equip.list <- equip.list %>%
   summarise(equip.depr.opex = sum(depr))
 
 rev.opex <- rev.opex %>% 
-  left_join(equip.list, "Customer.host.code")
+  left_join(equip.list, "Customer.host.code") %>% 
+  left_join(equip.count, "Customer.host.code")
 
 rev.opex$equip.depr.opex[is.na(rev.opex$equip.depr.opex)] <- 0
+rev.opex$equip.count[is.na(rev.opex$equip.count)] <- 0
 
-rm(equip.serv, equip.depr, equip.list)
+rm(equip.depr, equip.count, equip.list)
 
 # write.csv(rev.opex, "deliverables/artm_profit.csv")

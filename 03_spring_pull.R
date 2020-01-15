@@ -9,51 +9,52 @@ source("02_cts.R")
 options(java.parameters = "-Xmx8048m")
 # memory.limit(size=10000000000024)
 
-# classPath="C:/Program Files/sap/hdbclient/ngdbc.jar"
+classPath="C:/Program Files/sap/hdbclient/ngdbc.jar"
 # For ngdbc.jar use        # jdbcDriver <- JDBC(driverClass="com.sap.db.jdbc.Driver",
 # For HANA Studio jar use  # jdbcDriver <- JDBC(driverClass="com.sap.ndb.studio.jdbc.JDBCConnection",
 
-# jdbcDriver <- JDBC(driverClass="com.sap.db.jdbc.Driver",
-#                    classPath="C:/Program Files/sap/hdbclient/ngdbc.jar")
-# 
-# jdbcConnection <- dbConnect(jdbcDriver,
-#                             "jdbc:sap://vlpbid001.cokeonena.com:30015/_SYS_BIC",
-#                             "fl014036",
-#                             "jasoN3#w")
-# 
-# # Fetch all results
-# 
-# sql <- "SELECT \"VISITTYPE\",
-#                       \"ACCOUNT\",
-#                       \"PLANNEDSTART\",
-#                       \"EXECUTIONSTART\",
-#                       \"EXECUTIONEND\",
-#                       \"STATUS\",
-#                       \"SOURCE\",
-#                       \"ACCOUNT_NAME\",
-#                       \"User_Display\"
-#          FROM \"cona-reporting.field-sales::Q_CA_R_SpringVisit\"
-#          WHERE
-#          \"VISITTYPE\" = ? and
-#          \"STATUS\" = ? and
-#          \"SOURCE\" = ? and
-#          \"PLANNEDSTART\" >= ? and
-#          \"PLANNEDEND\" <= ?"
-# 
-# param1 <- 'ZA'
-# param2 <- 'FINAL'
-# param3 <- 'INT'
-# param4 <- '2018-11-01 00:00:00'
-# param5 <- '2019-10-31 00:00:00'
-# 
-# spring.visit <- dbGetQuery(jdbcConnection, sql,
-#                             param1,
-#                             param2,
-#                             param3,
-#                             param4,
-#                             param5)
+jdbcDriver <- JDBC(driverClass="com.sap.db.jdbc.Driver",
+                   classPath="C:/Program Files/sap/hdbclient/ngdbc.jar")
 
-rm(jdbcConnection, jdbcDriver, param1, param2, param3, param4, param5, sql, jdbcDriver)
+jdbcConnection <- dbConnect(jdbcDriver,
+                            "jdbc:sap://vlpbid001.cokeonena.com:30015/_SYS_BIC",
+                            "fl014036",
+                            key_get("hana.pw"))
+
+
+# Fetch all results
+
+sql <- "SELECT \"VISITTYPE\",
+                      \"ACCOUNT\",
+                      \"PLANNEDSTART\",
+                      \"EXECUTIONSTART\",
+                      \"EXECUTIONEND\",
+                      \"STATUS\",
+                      \"SOURCE\",
+                      \"ACCOUNT_NAME\",
+                      \"User_Display\"
+         FROM \"cona-reporting.field-sales::Q_CA_R_SpringVisit\"
+         WHERE
+         \"VISITTYPE\" = ? and
+         \"STATUS\" = ? and
+         \"SOURCE\" = ? and
+         \"PLANNEDSTART\" >= ? and
+         \"PLANNEDEND\" <= ?"
+
+param1 <- 'ZA'
+param2 <- 'FINAL'
+param3 <- 'INT'
+param4 <- '2018-11-01 00:00:00'
+param5 <- '2019-10-31 00:00:00'
+
+spring.visit <- dbGetQuery(jdbcConnection, sql,
+                            param1,
+                            param2,
+                            param3,
+                            param4,
+                            param5)
+
+rm(jdbcConnection, jdbcDriver, param1, param2, param3, param4, param5, sql, classPath)
 
 # saveRDS(spring.visit, "data/spring.RDS")
 

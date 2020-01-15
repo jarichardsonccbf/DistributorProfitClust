@@ -45,4 +45,4 @@ rev.opex %>%
   group_by(`Distributor Name`) %>% 
   summarise(mean.oi.ratio = mean(as.numeric(`OI Ratio`)))
 
-write.csv(rev.opex, "deliverables/artm_profit.csv", row.names = FALSE)
+write.csv(rev.opex, "deliverables/artm_profit_raw.csv", row.names = FALSE)

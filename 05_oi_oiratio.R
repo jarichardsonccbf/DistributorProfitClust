@@ -31,11 +31,14 @@ colnames(rev.opex) <- c("Distributor Name",
                  "Channel",
                  "KeyAccount",
                  "TradeName",
-                 "Total Hours", 
+                 "Total SAM Hours", 
                  "SAM OPEX", 
+                 "Relevant Equipment Count",
                  "Equipment Service OPEX", 
                  "Equipment Depreciation OPEX", 
-                 "Equipment Count",
+                 "Postmix Equip Count",
+                 "Cooler Count",
+                 "Vending Equip Count",
                  "Equipment Total OPEX",
                  "Outlet Total OPEX", 
                  "OI",
@@ -44,5 +47,8 @@ colnames(rev.opex) <- c("Distributor Name",
 rev.opex %>% 
   group_by(`Distributor Name`) %>% 
   summarise(mean.oi.ratio = mean(as.numeric(`OI Ratio`)))
+
+rev.opex <- rev.opex %>% 
+  filter(`OI Ratio` < 1.01)
 
 write.csv(rev.opex, "deliverables/artm_profit_raw.csv", row.names = FALSE)

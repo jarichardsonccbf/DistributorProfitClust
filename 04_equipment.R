@@ -51,13 +51,13 @@ lmp.only <- lmp.only %>%
 rtm.only <- rtm.only %>% 
   left_join(rbind(coolers, vending) %>% 
               group_by(Customer.host.code) %>% 
-              summarise(equip.count = n()), by = "Customer.host.code") %>% 
+              summarise(equip.count = sum(equip.count)), by = "Customer.host.code") %>% 
   rename(relevent.equip.count = equip.count)
 
 blend <- blend %>% 
   left_join(rbind(coolers, vending, fountain.equip) %>% 
               group_by(Customer.host.code) %>% 
-              summarise(equip.count = n()), by = "Customer.host.code") %>% 
+              summarise(equip.count = sum(equip.count)), by = "Customer.host.code") %>% 
   rename(relevent.equip.count = equip.count)
 
 equip.serv <- read.csv("data/equip_serv.csv")
@@ -105,13 +105,13 @@ lmp.only <- lmp.only %>%
 rtm.only <- rtm.only %>% 
   left_join(rbind(coolers.serv.opex, vending.serv.opex) %>% 
               group_by(Customer.host.code) %>% 
-              summarise(sum = n()), by = "Customer.host.code") %>% 
+              summarise(sum = sum(sum)), by = "Customer.host.code") %>% 
   rename(equip.serv.opex = sum)
 
 blend <- blend %>% 
   left_join(rbind(coolers.serv.opex, vending.serv.opex, lmp.equip.serv.opex) %>% 
               group_by(Customer.host.code) %>% 
-              summarise(sum = n()), by = "Customer.host.code") %>% 
+              summarise(sum = sum(sum)), by = "Customer.host.code") %>% 
   rename(equip.serv.opex = sum)
 
 lmp.only$equip.serv.opex[is.na(lmp.only$equip.serv.opex)] <- 0
@@ -145,15 +145,15 @@ vending <- vending.ref %>%
 lmp.only <- lmp.only %>% 
   left_join(fountain.equip, by = "Customer.host.code")
 
-rtm.only <- rtm.only %>% 
+  rtm.only <- rtm.only %>% 
   left_join(rbind(coolers, vending) %>% 
               group_by(Customer.host.code) %>% 
-              summarise(equip.depr.opex = n()), by = "Customer.host.code")
+              summarise(equip.depr.opex = sum(equip.depr.opex)), by = "Customer.host.code")
 
 blend <- blend %>% 
   left_join(rbind(coolers, vending, fountain.equip) %>% 
               group_by(Customer.host.code) %>% 
-              summarise(equip.depr.opex = n()), by = "Customer.host.code")
+              summarise(equip.depr.opex = sum(equip.depr.opex)), by = "Customer.host.code")
 
 lmp.only$equip.depr.opex[is.na(lmp.only$equip.depr.opex)] <- 0
 rtm.only$equip.depr.opex[is.na(rtm.only$equip.depr.opex)] <- 0

@@ -30,6 +30,7 @@ mm.red.truck <- read.csv("data/mm_red_truck.csv") %>%
 mm.check.bc <- mm.check.bc %>% 
   left_join(mm.red.truck, )
 
+
 library(xlsx)
 
 # write.xlsx(as.data.frame(mm.check.lmp), file="deliverables/equipment_checks.xlsx", sheetName="sheet1", row.names=FALSE)
